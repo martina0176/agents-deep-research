@@ -231,7 +231,7 @@ def reformat_section_headings(section_markdown: str) -> str:
     def adjust_heading_level(match):
         hashes = match.group(1)
         content = match.group(2)
-        new_level = max(2, len(hashes) + level_adjustment)
+        new_level = max(1, len(hashes) + level_adjustment)
         return '#' * new_level + ' ' + content
 
     # Apply the heading adjustment to all headings in one pass

@@ -19,6 +19,7 @@ from deep_researcher import LLMConfig, ResearchRunner
 from deep_researcher.agents.tool_agents import ToolAgentOutput
 from deep_researcher.agents.tool_agents.search_agent import init_search_agent
 from deep_researcher.agents.tool_agents.crawl_agent import init_crawl_agent
+from deep_researcher.agents.tool_agents.vector_search_agent import init_vector_search_agent
 from deep_researcher.agents.tool_selector_agent import AgentTask
 
 config = LLMConfig(
@@ -65,3 +66,19 @@ async def test_crawl_agent():
     assert isinstance(agent_output, ToolAgentOutput), "The SiteCrawlerAgent is not correctly formatting its output as a ToolAgentOutput"
     assert len(agent_output.output) > 0, "The SiteCrawlerAgent is not correctly retrieving and parsing data from the crawl tool"
     assert "test" in agent_output.output.lower(), "The SiteCrawlerAgent is not correctly retrieving and parsing data from the crawl tool"
+
+
+@pytest.mark.asyncio
+async def test_vector_search_agent():
+    """Test the VectorSearchAgent."""
+    vector_agent = init_vector_search_agent(config)
+    agent_task = AgentTask(
+        gap="Need to find sample documents",
+        agent="VectorSearchAgent",
+        query="sample query"
+    )
+    result = await ResearchRunner.run(vector_agent, agent_task.model_dump_json())
+    agent_output = result.final_output_as(ToolAgentOutput)
+
+    assert isinstance(agent_output, ToolAgentOutput), "The VectorSearchAgent did not return ToolAgentOutput"
+    assert isinstance(agent_output.output, str)
