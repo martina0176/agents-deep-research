@@ -119,6 +119,8 @@ Edit the `.env` file to add your OpenAI, Serper and other settings as needed, e.
 OPENAI_API_KEY=<your_key>
 SEARCH_PROVIDER=serper  # or set to openai
 SERPER_API_KEY=<your_key>
+VECTOR_SEARCH_SERVER_URL=<your-vector-search-server-url>
+VECTOR_SEARCH_TOOL_NAME=search
 ```
 
 ## Usage
@@ -233,6 +235,8 @@ The Deep Research Assistant is built with the following components:
   - Our implementation uses [Serper](https://www.serper.dev) to run Google searches by default, which requires an API key set to the `SERPER_API_KEY` env variable.
   - You can replace this with the native web search tool from OpenAI by setting the environment variable `SEARCH_PROVIDER` to `openai`
 - **Website Crawler**: Extracts detailed content from the pages of a given website
+- **Vector Search**: Retrieves information from a remote vector database
+  - Configure the server URL via `VECTOR_SEARCH_SERVER_URL` and the tool name via `VECTOR_SEARCH_TOOL_NAME`
 
 ### Implementing Custom Tool Agents
 
