@@ -1,0 +1,86 @@
+[project]
+name = "decision-dev"
+description = "Decision memory for Claude Code — captures why choices were made and surfaces them when you edit affected files."
+authors = [{ name = "Zima Labs", email = "hello@zimalabs.ai" }]
+readme = "README.md"
+license = { text = "MIT" }
+keywords = ["decisions", "memory", "architecture-decisions", "ADR", "claude-code", "knowledge-management"]
+requires-python = ">=3.9"
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/zimalabs/code-decisions"
+Repository = "https://github.com/zimalabs/code-decisions"
+Documentation = "https://github.com/zimalabs/code-decisions/blob/main/GUIDE.md"
+Changelog = "https://github.com/zimalabs/code-decisions/blob/main/CHANGELOG.md"
+Issues = "https://github.com/zimalabs/code-decisions/issues"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pytest-xdist",
+    "ruff",
+    "mypy",
+    "pre-commit",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/decision/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/decision"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+strict_markers = true
+pythonpath = ["src"]
+addopts = "-q"
+markers = [
+    "slow: tests that take >0.5s",
+]
+
+[tool.coverage.run]
+source = ["decision"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+fail_under = 90
+
+[tool.ruff]
+target-version = "py39"
+src = ["src"]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = ["SIM102", "SIM105", "SIM108", "SIM110"]
+
+[tool.mypy]
+python_version = "3.9"
+mypy_path = "src"
+packages = ["decision"]
+disallow_untyped_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_configs = true
